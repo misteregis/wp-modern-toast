@@ -1,9 +1,9 @@
 :root {
-  --success: #22c55e;
-  --error: #ef4444;
-  --info: #3b82f6;
-  --bg: #1e293b;
-  --text: #f1f5f9;
+  --mt-success: #22c55e;
+  --mt-error: #ef4444;
+  --mt-info: #3b82f6;
+  --mt-text: #f1f5f9;
+  --mt-bg: #1e293b;
 }
 
 .toast-container {
@@ -18,8 +18,8 @@
 
 .toast {
   min-width: 280px;
-  background: var(--bg);
-  color: var(--text);
+  background: var(--mt-bg);
+  color: var(--mt-text);
   padding: 14px 16px;
   border-radius: 12px;
   border-left: 4px solid white;
@@ -66,13 +66,13 @@
   transform-origin: left;
 }
 
-.toast.success .toast-progress { background: var(--success); }
-.toast.error .toast-progress { background: var(--error); }
-.toast.info .toast-progress { background: var(--info); }
+.toast.success .toast-progress { background: var(--mt-success); }
+.toast.error .toast-progress { background: var(--mt-error); }
+.toast.info .toast-progress { background: var(--mt-info); }
 
-.toast.success { border-left: 4px solid var(--success); }
-.toast.error { border-left: 4px solid var(--error); }
-.toast.info { border-left: 4px solid var(--info); }
+.toast.success { border-left: 4px solid var(--mt-success); }
+.toast.error { border-left: 4px solid var(--mt-error); }
+.toast.info { border-left: 4px solid var(--mt-info); }
 
 @keyframes slideIn {
   from { transform: translateX(120%); opacity: 0; }

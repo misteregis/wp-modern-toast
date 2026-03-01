@@ -212,10 +212,10 @@ function modern_toast_dynamic_css() {
     ?>
     <style>
         :root {
-            --success: <?php echo esc_html($options['success'] ?? '#22c55e'); ?>;
-            --error: <?php echo esc_html($options['error'] ?? '#ef4444'); ?>;
-            --info: <?php echo esc_html($options['info'] ?? '#3b82f6'); ?>;
-            --bg: <?php echo esc_html($options['bg'] ?? '#1e293b'); ?>;
+            --mt-success: <?php echo esc_html($options['success'] ?? '#22c55e'); ?>;
+            --mt-error: <?php echo esc_html($options['error'] ?? '#ef4444'); ?>;
+            --mt-info: <?php echo esc_html($options['info'] ?? '#3b82f6'); ?>;
+            --mt-bg: <?php echo esc_html($options['bg'] ?? '#1e293b'); ?>;
         }
 
         <?php echo esc_html($options['custom_css'] ?? ''); ?>
