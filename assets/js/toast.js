@@ -127,6 +127,7 @@
     static info = (message, ...args) => this._show(message, "info", ...args);
     static success = (message, ...args) => this._show(message, "success", ...args);
     static error = (message, ...args) => this._show(message, "error", ...args);
+    static warn = (message, ...args) => this._show(message, "warn", ...args);
   }
 
   window.ModernToast = ModernToast;

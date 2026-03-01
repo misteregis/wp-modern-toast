@@ -2,6 +2,7 @@
   --mt-success: #22c55e;
   --mt-error: #ef4444;
   --mt-info: #3b82f6;
+  --mt-warn: #f59e0b;
   --mt-text: #f1f5f9;
   --mt-bg: #1e293b;
 }
@@ -69,10 +70,12 @@
 .toast.success .toast-progress { background: var(--mt-success); }
 .toast.error .toast-progress { background: var(--mt-error); }
 .toast.info .toast-progress { background: var(--mt-info); }
+.toast.warn .toast-progress { background: var(--mt-warn); }
 
 .toast.success { border-left: 4px solid var(--mt-success); }
 .toast.error { border-left: 4px solid var(--mt-error); }
 .toast.info { border-left: 4px solid var(--mt-info); }
+.toast.warn { border-left: 4px solid var(--mt-warn); }
 
 @keyframes slideIn {
   from { transform: translateX(120%); opacity: 0; }

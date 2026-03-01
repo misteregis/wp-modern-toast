@@ -2,7 +2,7 @@
 /*
 Plugin Name: Modern Toast
 Description: Plugin de Toast moderno com suporte a HTML e pause on hover.
-Version: 1.1.0
+Version: 1.2.0
 Author: Misteregis
 Author URI:  https://github.com/misteregis/
 */
@@ -19,6 +19,7 @@ function modern_toast_sanitize_options($input) {
         'success'    => sanitize_text_field($input['success'] ?? '#22c55e'),
         'error'      => sanitize_text_field($input['error'] ?? '#ef4444'),
         'info'       => sanitize_text_field($input['info'] ?? '#3b82f6'),
+        'warn'       => sanitize_text_field($input['warn'] ?? '#f59e0b'),
         'text'       => sanitize_text_field($input['text'] ?? '#f1f5f9'),
         'bg'         => sanitize_text_field($input['bg'] ?? '#1e293b'),
         'duration'   => intval($input['duration'] ?? 4000),
@@ -120,6 +121,16 @@ function modern_toast_settings_page() {
                 </tr>
 
                 <tr>
+                    <th>Cor borda/barra de aviso</th>
+                    <td>
+                        <input type="text"
+                               class="modern-toast-color"
+                               name="modern_toast_options[warn]"
+                               value="<?php echo esc_attr($options['warn'] ?? '#f59e0b'); ?>">
+                    </td>
+                </tr>
+
+                <tr>
                     <th>Cor do texto</th>
                     <td>
                         <input type="text"
@@ -175,14 +186,14 @@ function modern_toast_enqueue_assets() {
         'modern-toast-style',
         plugin_dir_url(__FILE__) . 'assets/css/toast.css',
         [],
-        '1.1.0'
+        '1.2.0'
     );
 
     wp_enqueue_script(
         'modern-toast-script',
         plugin_dir_url(__FILE__) . 'assets/js/toast.js',
         [],
-        '1.1.0',
+        '1.2.0',
         true
     );
 
@@ -193,6 +204,7 @@ function modern_toast_enqueue_assets() {
         'success' => $options['success'] ?? '#22c55e',
         'error' => $options['error'] ?? '#ef4444',
         'info' => $options['info'] ?? '#3b82f6',
+        'warn' => $options['warn'] ?? '#f59e0b',
         'text' => $options['text'] ?? '#f1f5f9',
         'bg' => $options['bg'] ?? '#1e293b',
         'duration' => intval($options['duration'] ?? 4000),
@@ -236,7 +248,7 @@ function modern_toast_admin_assets($hook) {
         'modern-toast-admin',
         plugin_dir_url(__FILE__) . 'assets/js/admin.js',
         ['jquery', 'wp-color-picker', 'wp-codemirror'],
-        '1.1',
+        '1.2.0',
         true
     );
 
@@ -258,6 +270,7 @@ function modern_toast_dynamic_css() {
             --mt-success: <?php echo esc_html($options['success'] ?? '#22c55e'); ?>;
             --mt-error: <?php echo esc_html($options['error'] ?? '#ef4444'); ?>;
             --mt-info: <?php echo esc_html($options['info'] ?? '#3b82f6'); ?>;
+            --mt-warn: <?php echo esc_html($options['warn'] ?? '#f59e0b'); ?>;
             --mt-text: <?php echo esc_html($options['text'] ?? '#f1f5f9'); ?>;
             --mt-bg: <?php echo esc_html($options['bg'] ?? '#1e293b'); ?>;
         }
