@@ -35,6 +35,18 @@ function modern_toast_register_settings() {
 }
 add_action('admin_init', 'modern_toast_register_settings');
 
+function modern_toast_settings_link($links) {
+
+    $settings_link = '<a href="options-general.php?page=modern-toast">Configurações</a>';
+    array_unshift($links, $settings_link);
+
+    return $links;
+}
+add_filter(
+    'plugin_action_links_' . plugin_basename(__FILE__),
+    'modern_toast_settings_link'
+);
+
 /*--------------------------------------------------------------
 # MENU ADMIN
 --------------------------------------------------------------*/
