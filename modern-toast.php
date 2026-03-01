@@ -19,10 +19,11 @@ function modern_toast_sanitize_options($input) {
         'success'    => sanitize_text_field($input['success'] ?? '#22c55e'),
         'error'      => sanitize_text_field($input['error'] ?? '#ef4444'),
         'info'       => sanitize_text_field($input['info'] ?? '#3b82f6'),
+        'text'       => sanitize_text_field($input['text'] ?? '#f1f5f9'),
         'bg'         => sanitize_text_field($input['bg'] ?? '#1e293b'),
         'duration'   => intval($input['duration'] ?? 4000),
         'allow_html' => isset($input['allow_html']) ? 1 : 0,
-        'custom_css' => wp_strip_all_tags($input['custom_css'] ?? '')
+        'custom_css' => $input['custom_css'] ?? ''
     ];
 }
 
@@ -36,7 +37,6 @@ function modern_toast_register_settings() {
 add_action('admin_init', 'modern_toast_register_settings');
 
 function modern_toast_settings_link($links) {
-
     $settings_link = '<a href="options-general.php?page=modern-toast">Configurações</a>';
     array_unshift($links, $settings_link);
 
@@ -90,7 +90,7 @@ function modern_toast_settings_page() {
                 </tr>
 
                 <tr>
-                    <th>Cor mensagem de sucesso</th>
+                    <th>Cor borda/barra de sucesso</th>
                     <td>
                         <input type="text"
                                class="modern-toast-color"
@@ -100,7 +100,7 @@ function modern_toast_settings_page() {
                 </tr>
 
                 <tr>
-                    <th>Cor mensagem de erro</th>
+                    <th>Cor borda/barra de erro</th>
                     <td>
                         <input type="text"
                                class="modern-toast-color"
@@ -110,12 +110,22 @@ function modern_toast_settings_page() {
                 </tr>
 
                 <tr>
-                    <th>Cor mensagem de informação</th>
+                    <th>Cor borda/barra de informação</th>
                     <td>
                         <input type="text"
                                class="modern-toast-color"
                                name="modern_toast_options[info]"
                                value="<?php echo esc_attr($options['info'] ?? '#3b82f6'); ?>">
+                    </td>
+                </tr>
+
+                <tr>
+                    <th>Cor do texto</th>
+                    <td>
+                        <input type="text"
+                               class="modern-toast-color"
+                               name="modern_toast_options[text]"
+                               value="<?php echo esc_attr($options['text'] ?? '#f1f5f9'); ?>">
                     </td>
                 </tr>
 
@@ -139,7 +149,12 @@ function modern_toast_settings_page() {
                 <tr>
                     <th>CSS Personalizado</th>
                     <td>
-                        <textarea name="modern_toast_options[custom_css]" rows="8" cols="50"><?php echo esc_textarea($options['custom_css'] ?? ''); ?></textarea>
+                        <textarea
+                            id="modern-toast-custom-css"
+                            name="modern_toast_options[custom_css]"
+                            rows="10"
+                            style="width: 100%;"
+                        ><?php echo esc_textarea($options['custom_css'] ?? ''); ?></textarea>
                         <p class="description">CSS extra aplicado ao toast.</p>
                     </td>
                 </tr>
@@ -178,6 +193,7 @@ function modern_toast_enqueue_assets() {
         'success' => $options['success'] ?? '#22c55e',
         'error' => $options['error'] ?? '#ef4444',
         'info' => $options['info'] ?? '#3b82f6',
+        'text' => $options['text'] ?? '#f1f5f9',
         'bg' => $options['bg'] ?? '#1e293b',
         'duration' => intval($options['duration'] ?? 4000),
         'allowHTML'   => isset($options['allow_html']) ? (bool)$options['allow_html'] : false
@@ -190,16 +206,43 @@ function modern_toast_admin_assets($hook) {
         return;
     }
 
+    // Color Picker
     wp_enqueue_style('wp-color-picker');
     wp_enqueue_script('wp-color-picker');
+
+    // CodeMirror Theme
+    wp_enqueue_style(
+        'cm-mdn-like',
+        'https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/theme/mdn-like.min.css',
+        [],
+        '5.65.16'
+    );
+
+    // Code Editor (CodeMirror)
+    $settings = wp_enqueue_code_editor([
+        'type' => 'text/css',
+        'codemirror' => [
+            'mode' => 'text/css',
+            'theme' => 'mdn-like',
+            'indentUnit' => 2,
+            'tabSize' => 2,
+            'lineNumbers' => true,
+            'matchBrackets' => true,
+            'autoCloseBrackets' => true,
+        ],
+    ]);
 
     wp_enqueue_script(
         'modern-toast-admin',
         plugin_dir_url(__FILE__) . 'assets/js/admin.js',
-        ['wp-color-picker'],
-        '1.0',
+        ['jquery', 'wp-color-picker', 'wp-codemirror'],
+        '1.1',
         true
     );
+
+    wp_localize_script('modern-toast-admin', 'ModernToastAdmin', [
+        'codeEditorSettings' => $settings
+    ]);
 }
 add_action('admin_enqueue_scripts', 'modern_toast_admin_assets');
 
@@ -215,6 +258,7 @@ function modern_toast_dynamic_css() {
             --mt-success: <?php echo esc_html($options['success'] ?? '#22c55e'); ?>;
             --mt-error: <?php echo esc_html($options['error'] ?? '#ef4444'); ?>;
             --mt-info: <?php echo esc_html($options['info'] ?? '#3b82f6'); ?>;
+            --mt-text: <?php echo esc_html($options['text'] ?? '#f1f5f9'); ?>;
             --mt-bg: <?php echo esc_html($options['bg'] ?? '#1e293b'); ?>;
         }
 

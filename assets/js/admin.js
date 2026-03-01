@@ -1,5 +1,16 @@
 jQuery(document).ready(function($) {
-    $('.modern-toast-color').wpColorPicker({
+    // Color Picker
+    $(".modern-toast-color").wpColorPicker({
         palettes: true
     });
+
+    // CodeMirror CSS Editor
+    if (typeof wp !== "undefined" && wp.codeEditor) {
+        const editorSettings = ModernToastAdmin.codeEditorSettings;
+
+        wp.codeEditor.initialize(
+            document.getElementById("modern-toast-custom-css"),
+            editorSettings
+        );
+    }
 });
