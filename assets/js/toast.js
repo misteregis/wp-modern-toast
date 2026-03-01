@@ -1,6 +1,9 @@
 (function () {
   class ModernToast {
-    static _defaults = { duration: 4000, allowHTML: false };
+    static _defaults = {
+      duration: ModernToastSettings.duration ?? 4000,
+      allowHTML: ModernToastSettings.allowHTML ?? false
+    };
 
     static isPlainObject(value) {
       if (Object.prototype.toString.call(value) !== '[object Object]') {
