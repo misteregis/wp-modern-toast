@@ -37,6 +37,10 @@
   animation: slideOut 0.4s ease forwards;
 }
 
+.toast-message {
+  padding-right: 0.5em;
+}
+
 .toast-message,
 .toast-message * {
   font-size: 14px;
