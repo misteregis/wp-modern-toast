@@ -72,6 +72,11 @@
 .toast.info .toast-progress { background: var(--mt-info); }
 .toast.warn .toast-progress { background: var(--mt-warn); }
 
+.toast.success.use-type-color .toast-message { color: var(--mt-success); }
+.toast.error.use-type-color .toast-message { color: var(--mt-error); }
+.toast.info.use-type-color .toast-message { color: var(--mt-info); }
+.toast.warn.use-type-color .toast-message { color: var(--mt-warn); }
+
 .toast.success { border-left: 4px solid var(--mt-success); }
 .toast.error { border-left: 4px solid var(--mt-error); }
 .toast.info { border-left: 4px solid var(--mt-info); }

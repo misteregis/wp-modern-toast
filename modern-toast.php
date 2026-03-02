@@ -24,6 +24,7 @@ function modern_toast_sanitize_options($input) {
         'bg'         => sanitize_text_field($input['bg'] ?? '#1e293b'),
         'duration'   => intval($input['duration'] ?? 4000),
         'allow_html' => isset($input['allow_html']) ? 1 : 0,
+        'use_type_color' => isset($input['use_type_color']) ? 1 : 0,
         'custom_css' => $input['custom_css'] ?? ''
     ];
 }
@@ -86,6 +87,20 @@ function modern_toast_settings_page() {
                         </label>
                         <p class="description">
                             ⚠️ Cuidado: habilitar HTML pode permitir XSS se o conteúdo vier do usuário.
+                        </p>
+                    </td>
+                </tr>
+
+                <tr>
+                    <th>Usar cor do tipo no texto</th>
+                    <td>
+                        <label>
+                            <input type="checkbox" name="modern_toast_options[use_type_color]" value="1"
+                                <?php checked($options['use_type_color'] ?? 0, 1); ?>>
+                            Usar a cor correspondente ao tipo do toast no texto
+                        </label>
+                        <p class="description">
+                            Quando ativado, o texto terá a cor do tipo (success, error, info, warn) ao invés da cor padrão.
                         </p>
                     </td>
                 </tr>
@@ -208,7 +223,8 @@ function modern_toast_enqueue_assets() {
         'text' => $options['text'] ?? '#f1f5f9',
         'bg' => $options['bg'] ?? '#1e293b',
         'duration' => intval($options['duration'] ?? 4000),
-        'allowHTML'   => isset($options['allow_html']) ? (bool)$options['allow_html'] : false
+        'allowHTML'   => isset($options['allow_html']) ? (bool)$options['allow_html'] : false,
+        'useTypeColor' => isset($options['use_type_color']) ? (bool)$options['use_type_color'] : false
     ]);
 }
 add_action('wp_enqueue_scripts', 'modern_toast_enqueue_assets');

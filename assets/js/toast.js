@@ -2,11 +2,12 @@
   class ModernToast {
     static _defaults = {
       duration: ModernToastSettings.duration ?? 4000,
-      allowHTML: ModernToastSettings.allowHTML ?? false
+      allowHTML: ModernToastSettings.allowHTML ?? false,
+      useTypeColor: ModernToastSettings.useTypeColor ?? false
     };
 
     static isPlainObject(value) {
-      if (Object.prototype.toString.call(value) !== '[object Object]') {
+      if (Object.prototype.toString.call(value) !== "[object Object]") {
         return false;
       }
 
@@ -29,7 +30,7 @@
     }
 
     static _show(message, ...args) {
-      const { type, duration, allowHTML } = this._normalizeArgs(args);
+      const { type, duration, allowHTML, useTypeColor } = this._normalizeArgs(args);
 
       const container = document.getElementById("mt-toast-container");
       if (!container) return;
@@ -39,6 +40,10 @@
 
       if (type) {
         toast.classList.add(type);
+      }
+
+      if (useTypeColor) {
+        toast.classList.add("use-type-color");
       }
 
       const msg = document.createElement("div");
