@@ -2,7 +2,7 @@
 /*
 Plugin Name: Modern Toast
 Description: Plugin de Toast moderno com suporte a HTML e pause on hover.
-Version: 1.2.1
+Version: 1.2.2
 Author: Misteregis
 Author URI:  https://github.com/misteregis/
 */
@@ -201,14 +201,14 @@ function modern_toast_enqueue_assets() {
         'modern-toast-style',
         plugin_dir_url(__FILE__) . 'assets/css/toast.css',
         [],
-        '1.2.1'
+        '1.2.2'
     );
 
     wp_enqueue_script(
         'modern-toast-script',
         plugin_dir_url(__FILE__) . 'assets/js/toast.js',
         [],
-        '1.2.1',
+        '1.2.2',
         true
     );
 
@@ -264,7 +264,7 @@ function modern_toast_admin_assets($hook) {
         'modern-toast-admin',
         plugin_dir_url(__FILE__) . 'assets/js/admin.js',
         ['jquery', 'wp-color-picker', 'wp-codemirror'],
-        '1.2.1',
+        '1.2.2',
         true
     );
 

@@ -13,6 +13,7 @@
   right: 20px;
   display: flex;
   flex-direction: column;
+  max-width: 23.75rem;
   gap: 12px;
   z-index: 99999;
 }
